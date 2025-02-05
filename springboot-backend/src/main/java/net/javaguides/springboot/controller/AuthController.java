@@ -17,9 +17,11 @@ public class AuthController {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    String encodedPassword = passwordEncoder.encode("defaultPassword");
+    private final PasswordEncoder passwordEncoder;
+
+    public AuthController(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -39,11 +41,14 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody User user) {
+        
+        if (user.getEmail() == null || user.getEmail().isEmpty()) {
+        return ResponseEntity.badRequest().body("Email is required");
+    }
         Optional<User> dbUser = userRepository.findByEmail(user.getEmail());
 
         if(dbUser.isPresent() && passwordEncoder.matches(user.getPassword(), dbUser.get().getPassword())) {
             String token = jwtUtil.generateToken(dbUser.get().getEmail());
-            
             return ResponseEntity.ok(token);
         }
 

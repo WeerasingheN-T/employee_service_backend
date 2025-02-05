@@ -4,15 +4,18 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import net.javaguides.springboot.model.User;
+import net.javaguides.springboot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.util.StringUtils;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Optional; // ✅ Missing import
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
@@ -20,7 +23,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private JwtUtil jwtUtil;
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private UserRepository userRepository;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -28,14 +31,22 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String token = extractJwtFromRequest(request);
 
-        if (StringUtils.hasText(token) && jwtUtil.validateToken(token,empId)) {
+        if (StringUtils.hasText(token)) {
             String empId = jwtUtil.extractEmpId(token);
 
-            UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+            if (jwtUtil.validateToken(token)) { // ✅ Ensure correct validation method
+                Optional<User> optionalUser = userRepository.findByEmpId(empId);
 
-            if (userDetails != null) {
-                JwtAuthenticationToken authentication = new JwtAuthenticationToken(userDetails, token, userDetails.getAuthorities());
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+                if (optionalUser.isPresent()) {
+                    User user = optionalUser.get(); // ✅ Get user safely from Optional
+
+                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                            user, null, Collections.emptyList());
+
+                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
             }
         }
 
