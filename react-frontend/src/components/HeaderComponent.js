@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'; // for navigation
+import { Link, withRouter } from 'react-router-dom'; 
 
 class HeaderComponent extends Component {
     constructor(props) {
@@ -7,6 +7,12 @@ class HeaderComponent extends Component {
 
         this.state = {}
     }
+
+    handleLogout = () => {
+        localStorage.removeItem('token'); 
+        this.props.history.push('/');
+    };
+    
 
     render() {
         return (
@@ -19,6 +25,15 @@ class HeaderComponent extends Component {
                             </a>
                         </div>
                         
+                        {localStorage.getItem('token') ? (
+                            <div className="collapse navbar-collapse">
+                            <ul className="navbar-nav ml-auto">
+                                <li className="nav-item">
+                                    <button className="btn btn-primary" onClick={this.handleLogout}>Log Out</button>
+                                </li>
+                            </ul>
+                        </div>
+                        ):(
                         <div className="collapse navbar-collapse">
                             <ul className="navbar-nav ml-auto">
                                 <li className="nav-item">
@@ -29,6 +44,8 @@ class HeaderComponent extends Component {
                                 </li>
                             </ul>
                         </div>
+                        ) }
+                        
                     </nav>
                 </header>
             </div>
@@ -36,4 +53,4 @@ class HeaderComponent extends Component {
     }
 }
 
-export default HeaderComponent;
+export default withRouter(HeaderComponent);

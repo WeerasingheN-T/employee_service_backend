@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link,withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import UserService from '../services/UserService'
 
 class SignIn extends Component {
@@ -25,8 +25,9 @@ class SignIn extends Component {
         let user = {email: this.state.email, password: this.state.password};
         UserService.loginUser(user).then((res) => {
             this.setState({message: res.data}, () =>{
+                localStorage.setItem('token',res.data.token);
                 alert("Login Successfull!");
-                this.props.history.push('/employees')
+                this.props.history.push('/employees/_add')
             });
         }).catch((error) =>{
             if (error.response && error.response.data) {

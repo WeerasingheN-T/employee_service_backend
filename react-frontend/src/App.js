@@ -9,6 +9,7 @@ import UpdateEmployeeComponent from './components/UpdateEmployeeComponent';
 import ViewEmployeeComponent from './components/ViewEmployeeComponent';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
+import PrivateRoute from './securoty/PrivateRoute';
 
 function App() {
   return (
@@ -17,12 +18,11 @@ function App() {
               <HeaderComponent />
                 <div className="container">
                     <Switch> 
-                          <Route path = "/" exact component = {SignIn}></Route>
-                          <Route path = "/employees" component = {ListEmployeeComponent}></Route>
-                          <Route path = "/add-employee/:id" component = {CreateEmployeeComponent}></Route>
-                          <Route path = "/view-employee/:id" component = {ViewEmployeeComponent}></Route>
-                          <Route path = "/emplist" exact component = {ListEmployeeComponent}></Route>
-                          <Route path = "/signup" component = {SignUp}></Route>
+                          <Route path = "/" exact component = {SignIn}/>
+                          <Route path = "/signup" component = {SignUp} />
+                          <PrivateRoute path = "/employees" component = {ListEmployeeComponent} />
+                          <PrivateRoute path = "/employees/:id" component = {CreateEmployeeComponent} />
+                          <PrivateRoute path = "/employees/view/:id" component = {ViewEmployeeComponent} />
                           {/* <Route path = "/update-employee/:id" component = {UpdateEmployeeComponent}></Route> */}
                     </Switch>
                 </div>

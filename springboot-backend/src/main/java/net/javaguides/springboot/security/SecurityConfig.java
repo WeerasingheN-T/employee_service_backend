@@ -33,6 +33,7 @@ public class SecurityConfig {
         http.cors().and().csrf().disable()
             .authorizeRequests()
             .requestMatchers("/api/auth/**").permitAll()
+            .requestMatchers("/api/v1/employees/**").authenticated()
             .anyRequest().authenticated()
             .and()
             .sessionManagement()
