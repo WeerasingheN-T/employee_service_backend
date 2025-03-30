@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import UserService from '../services/UserService'
 
 class SignUp extends Component {
@@ -32,6 +32,8 @@ class SignUp extends Component {
         UserService.registerUser(user).then((res) => {
             this.setState({ message: res.data},() => {
                 alert(`${this.state.message}`);
+                this.props.history.push("/");
+
             });
         }).catch((error)=>{
             if (error.response && error.response.data) {

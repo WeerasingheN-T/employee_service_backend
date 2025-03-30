@@ -21,11 +21,9 @@ class HeaderComponent extends Component {
                         
                         <div className="collapse navbar-collapse">
                             <ul className="navbar-nav ml-auto">
-                                {/* Sign In Link */}
                                 <li className="nav-item">
-                                    <Link className="nav-link" to="/signin">Sign In</Link>
+                                    <Link className="nav-link" to="/">Sign In</Link>
                                 </li>
-                                {/* Sign Up Link */}
                                 <li className="nav-item">
                                     <Link className="nav-link" to="/signup">Sign Up</Link>
                                 </li>
