@@ -1,12 +1,11 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom'; // for navigation
 
 class HeaderComponent extends Component {
     constructor(props) {
         super(props)
 
-        this.state = {
-                 
-        }
+        this.state = {}
     }
 
     render() {
@@ -14,12 +13,29 @@ class HeaderComponent extends Component {
             <div>
                 <header>
                     <nav className="navbar navbar-expand-md navbar-dark bg-dark">
-                    <div><a href="https://javaguides.net" className="navbar-brand">EmpService</a></div>
+                        <div>
+                            <a href="" className="navbar-brand">
+                                <img src='/images/empLog.png' alt="Logo" style={{ height: "50px" }} />
+                            </a>
+                        </div>
+                        
+                        <div className="collapse navbar-collapse">
+                            <ul className="navbar-nav ml-auto">
+                                {/* Sign In Link */}
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/signin">Sign In</Link>
+                                </li>
+                                {/* Sign Up Link */}
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/signup">Sign Up</Link>
+                                </li>
+                            </ul>
+                        </div>
                     </nav>
                 </header>
             </div>
-        )
+        );
     }
 }
 
-export default HeaderComponent
+export default HeaderComponent;
