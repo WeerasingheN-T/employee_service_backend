@@ -25,7 +25,8 @@ class SignIn extends Component {
         let user = {email: this.state.email, password: this.state.password};
         UserService.loginUser(user).then((res) => {
             this.setState({message: res.data}, () =>{
-                localStorage.setItem('token',res.data.token);
+                localStorage.setItem('token',res.data);
+                console.log(res.data);
                 alert("Login Successfull!");
                 this.props.history.push('/employees/_add')
             });

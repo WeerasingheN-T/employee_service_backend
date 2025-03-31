@@ -5,7 +5,6 @@ import ListEmployeeComponent from './components/ListEmployeeComponent';
 import HeaderComponent from './components/HeaderComponent';
 import FooterComponent from './components/FooterComponent';
 import CreateEmployeeComponent from './components/CreateEmployeeComponent';
-import UpdateEmployeeComponent from './components/UpdateEmployeeComponent';
 import ViewEmployeeComponent from './components/ViewEmployeeComponent';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
@@ -21,9 +20,9 @@ function App() {
                           <Route path = "/" exact component = {SignIn}/>
                           <Route path = "/signup" component = {SignUp} />
                           <PrivateRoute path = "/employees" component = {ListEmployeeComponent} />
-                          <PrivateRoute path = "/employees/:id" component = {CreateEmployeeComponent} />
-                          <PrivateRoute path = "/employees/view/:id" component = {ViewEmployeeComponent} />
-                          {/* <Route path = "/update-employee/:id" component = {UpdateEmployeeComponent}></Route> */}
+                          <PrivateRoute path = "/employee/:id" component = {CreateEmployeeComponent} />
+                          <PrivateRoute path = "/employee-view/:id" component = {ViewEmployeeComponent} />
+                          
                     </Switch>
                 </div>
               <FooterComponent />

@@ -26,10 +26,10 @@ class ListEmployeeComponent extends Component {
         }
     }
     viewEmployee(id){
-        this.props.history.push(`/employees/view/${id}`);
+        this.props.history.push(`/employee-view/${id}`);
     }
     editEmployee(id){
-        this.props.history.push(`/employees/update/${id}`);
+        this.props.history.push(`/employee/${id}`);
     }
 
     componentDidMount(){
@@ -39,7 +39,7 @@ class ListEmployeeComponent extends Component {
     }
 
     addEmployee(){
-        this.props.history.push('/employees/_add');
+        this.props.history.push('/employee/add');
     }
 
     render() {
