@@ -41,6 +41,12 @@
 			<artifactId>spring-boot-starter-data-mongodb</artifactId>
 		</dependency>
 
+        <!-- Java Mail -->
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+
 		<!-- JSON Web Token (JWT) -->
 		<dependency>
             <groupId>io.jsonwebtoken</groupId>
